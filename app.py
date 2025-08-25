@@ -162,20 +162,20 @@ def main():
                 except Exception as e:
                     st.error(str(e))
 
-    # EXPORT
+        # EXPORT
     with tab_export:
-    st.subheader("History & Export")
-    df = pd.DataFrame(st.session_state["history"])
-    if df.empty:
-        st.info("No processed chats yet. Process in the other tabs first.")
-    else:
-        st.dataframe(df, use_container_width=True, height=400)
-        csv_bytes = df.to_csv(index=False).encode("utf-8")
-        st.download_button("⬇️ Download CSV", data=csv_bytes, file_name="organized_chats.csv", mime="text/csv")
-        st.write("Tip: You can import this CSV into Google Sheets or Notion for further organization.")
+        st.subheader("History & Export")
+        df = pd.DataFrame(st.session_state["history"])
+        if df.empty:
+            st.info("No processed chats yet. Process in the other tabs first.")
+        else:
+            st.dataframe(df, use_container_width=True, height=400)
+            csv_bytes = df.to_csv(index=False).encode("utf-8")
+            st.download_button("⬇️ Download CSV", data=csv_bytes, file_name="organized_chats.csv", mime="text/csv")
+            st.write("Tip: You can import this CSV into Google Sheets or Notion for further organization.")
 
     with st.expander("How-To (like you're 12) — Read Me"):
-    st.markdown("""
+        st.markdown("""
 1) Get your OpenAI API key and paste it in Step 0.  
 2) Copy your chat from ChatGPT (or any AI), and paste it into the Single Chat box.  
 3) Click **Process**. The app will create:  
@@ -187,6 +187,5 @@ def main():
 4) Go to **Export History** and click **Download CSV** to save everything.  
 5) Repeat for more chats, or use **Batch** to process many at once separated by `-----`.  
 """)
-
-if __name__ == "__main__":
+    if __name__ == "__main__":
     main()
