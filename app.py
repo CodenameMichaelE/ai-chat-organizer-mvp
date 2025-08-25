@@ -175,7 +175,18 @@ def main():
             st.write("Tip: You can import this CSV into Google Sheets or Notion for further organization.")
 
     with st.expander("How-To (like you're 12) — Read Me"):
-        st.markdown(\"\"\"
+       st.markdown("""
+1) Get your OpenAI API key and paste it in Step 0.  
+2) Copy your chat from ChatGPT (or any AI), and paste it into the Single Chat box.  
+3) Click **Process**. The app will create:  
+   - A short **title**  
+   - A 3–5 sentence **summary**  
+   - **Tags** (keywords)  
+   - **Bullets** (key points)  
+   - **Action Items** (optional next steps)  
+4) Go to **Export History** and click **Download CSV** to save everything.  
+5) Repeat for more chats, or use **Batch** to process many at once separated by `-----`.  
+""")
 1) Get your OpenAI API key and paste it in Step 0.
 2) Copy your chat from ChatGPT (or any AI), and paste it into the Single Chat box.
 3) Click **Process**. The app will create:
