@@ -187,5 +187,5 @@ def main():
 4) Go to **Export History** and click **Download CSV** to save everything.  
 5) Repeat for more chats, or use **Batch** to process many at once separated by `-----`.  
 """)
-    if __name__ == "__main__":
+if __name__ == "__main__":
     main()
