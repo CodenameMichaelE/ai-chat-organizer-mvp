@@ -162,8 +162,8 @@ def main():
                 except Exception as e:
                     st.error(str(e))
 
-# EXPORT
-with tab_export:
+    # EXPORT
+    with tab_export:
     st.subheader("History & Export")
     df = pd.DataFrame(st.session_state["history"])
     if df.empty:
@@ -174,7 +174,7 @@ with tab_export:
         st.download_button("⬇️ Download CSV", data=csv_bytes, file_name="organized_chats.csv", mime="text/csv")
         st.write("Tip: You can import this CSV into Google Sheets or Notion for further organization.")
 
-with st.expander("How-To (like you're 12) — Read Me"):
+    with st.expander("How-To (like you're 12) — Read Me"):
     st.markdown("""
 1) Get your OpenAI API key and paste it in Step 0.  
 2) Copy your chat from ChatGPT (or any AI), and paste it into the Single Chat box.  
