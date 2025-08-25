@@ -1,0 +1,5 @@
+
+You: I want to create QR codes for my Shopify store, but I also want to use Pretty Links for tracking.
+AI: Great idea. Create a hidden landing page and point the QR code to it. Then wrap that URL with a Pretty Link.
+You: How do I rotate limited-edition merch without being manipulative?
+AI: Use transparent scarcity. Rotate designs seasonally, publish the rotation schedule, and make it a celebration, not pressure.

@@ -1,0 +1,2 @@
+date,title,summary,tags,bullets,action_items,chat_snippet
+YYYY-MM-DD,Short searchable title,3-5 sentence summary,"comma, separated, tags",• bullet1 • bullet2 • bullet3,Action 1 | Action 2 | Action 3,first 500 chars of original chat
