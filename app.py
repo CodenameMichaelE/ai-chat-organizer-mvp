@@ -162,7 +162,7 @@ def main():
                 except Exception as e:
                     st.error(str(e))
 
-   # EXPORT
+# EXPORT
 with tab_export:
     st.subheader("History & Export")
     df = pd.DataFrame(st.session_state["history"])
