@@ -111,7 +111,8 @@ def main():
     st.title("🗂️ AI Chat Organizer — MVP")
     st.caption("Paste a chat → get a title, summary, tags, bullets, and action items. Export as CSV.")
 
-        with st.expander("Step 0 — API Key"):
+    # --- API Key handling: prefer Streamlit Secrets, allow manual override ---
+    with st.expander("Step 0 — API Key"):
         secret_key = st.secrets.get("OPENAI_API_KEY", "")
         api_key = ""  # manual override if provided
 
@@ -124,10 +125,10 @@ def main():
             st.warning("No OPENAI_API_KEY found in Streamlit Secrets. Paste your key below.")
             api_key = st.text_input("OpenAI API Key", type="password", placeholder="sk-...")
 
+        # store manual key (may be empty). ensure_openai_client() will fall back to secrets.
         st.session_state["api_key"] = api_key
 
     tab_single, tab_batch, tab_export = st.tabs(["Single Chat", "Batch Paste", "Export History"])
-
     if "history" not in st.session_state:
         st.session_state["history"] = []  # list of rows
 
