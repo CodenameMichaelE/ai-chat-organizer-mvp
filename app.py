@@ -35,12 +35,18 @@ Transcript:
 ---
 Now produce ONLY the JSON, no commentary."""
 
-def ensure_openai_client(api_key: str):
+def ensure_openai_client(manual_key: str = ""):
     if not HAS_OAI:
         raise RuntimeError("OpenAI SDK is not installed in this environment. Add 'openai>=1.0.0' to requirements and redeploy.")
-    if not api_key:
-        raise ValueError("Missing OpenAI API key.")
-    os.environ["OPENAI_API_KEY"] = api_key
+
+    # Prefer secrets, fallback to manual paste
+    secret_key = st.secrets.get("OPENAI_API_KEY", "")
+    key_to_use = (manual_key or secret_key).strip()
+
+    if not key_to_use:
+        raise ValueError("Missing OpenAI API key. Please add it to Streamlit Secrets or paste it in Step 0.")
+
+    os.environ["OPENAI_API_KEY"] = key_to_use
     return OpenAI()
 
 def call_openai(client, system_prompt: str, user_prompt: str) -> Dict[str, Any]:
@@ -105,9 +111,20 @@ def main():
     st.title("🗂️ AI Chat Organizer — MVP")
     st.caption("Paste a chat → get a title, summary, tags, bullets, and action items. Export as CSV.")
 
-    with st.expander("Step 0 — API Key (kept in your browser session)"):
-        api_key = st.text_input("OpenAI API Key", type="password", help="Find it in your OpenAI account. We store it only in your session.")
-        st.write("Model: gpt-4o-mini (change in code if desired).")
+        with st.expander("Step 0 — API Key"):
+        secret_key = st.secrets.get("OPENAI_API_KEY", "")
+        api_key = ""  # manual override if provided
+
+        if secret_key:
+            st.success("Using OPENAI_API_KEY from Streamlit Secrets.")
+            override = st.checkbox("Override secrets and paste a different key", value=False)
+            if override:
+                api_key = st.text_input("OpenAI API Key", type="password", placeholder="sk-...")
+        else:
+            st.warning("No OPENAI_API_KEY found in Streamlit Secrets. Paste your key below.")
+            api_key = st.text_input("OpenAI API Key", type="password", placeholder="sk-...")
+
+        st.session_state["api_key"] = api_key
 
     tab_single, tab_batch, tab_export = st.tabs(["Single Chat", "Batch Paste", "Export History"])
 
@@ -123,7 +140,7 @@ def main():
                 st.warning("Please paste a chat first.")
             else:
                 try:
-                    client = ensure_openai_client(api_key)
+                    client = ensure_openai_client(st.session_state.get("api_key", ""))
                     result = process_chat(chat, client)
                     row = to_row(chat, result)
                     st.session_state["history"].append(row)
